@@ -59,14 +59,24 @@
 	top: 55px;
 	right: 10px;
 }
+.bottom{
+	width: 90vw;
+	height: 75vh;
+	position: relative;
+}
 swiper {
 	width: 90vw;
 	height: 75vh;
 }
-swiper-item{
-	border-radius: 8px;
+.mp3{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 30px;
+	right: 20px;
+	z-index: 1;
 }
-image {
+.png {
 	width: 90vw;
 	height: 75vh;
 	border-radius: 8px;

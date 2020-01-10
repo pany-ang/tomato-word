@@ -1,16 +1,42 @@
 <script>
 	export default {
 		globalData: {
-			text: '全局变量'
+			dataPNG: [],
+			dataMP3: []
 		},
 		onLaunch: function() {
-			console.log('App Launch')
+			const dateNow = +new Date()
+			let dateArr = [
+				(new Date(dateNow)),
+				(new Date(dateNow - 3600 * 1000 * 24 * 1)),
+				(new Date(dateNow - 3600 * 1000 * 24 * 2)),
+				(new Date(dateNow - 3600 * 1000 * 24 * 3)),
+				(new Date(dateNow - 3600 * 1000 * 24 * 4)),
+				(new Date(dateNow - 3600 * 1000 * 24 * 5)),
+				(new Date(dateNow - 3600 * 1000 * 24 * 6))
+			];
+			for(let i=0; i<dateArr.length; i++){
+				let time = dateArr[i];
+				let YY = time.getFullYear()
+				let MM = (time.getMonth() + 1) < 10 ? ('0' + (time.getMonth() + 1)) : (time.getMonth() + 1)
+				let DD = time.getDate() < 10 ? ('0' + time.getDate()) : time.getDate()
+				dateArr[i] = YY + '-' + MM + '-' + DD
+			}
+			for(let i=0; i<dateArr.length; i++){
+				uni.request({
+				    url: `http://open.iciba.com/dsapi/?date=${dateArr[i]}`,
+				    success: (res) => {
+						this.$scope.globalData.dataPNG.push(res.data.fenxiang_img)
+						this.$scope.globalData.dataMP3.push(res.data.tts)
+				    }
+				});
+			}
 		},
 		onShow: function() {
-			console.log('App Show')
+			// console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			// console.log('App Hide')
 		}
 	}
 </script>

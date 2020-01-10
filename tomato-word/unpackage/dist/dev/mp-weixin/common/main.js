@@ -91,20 +91,47 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 {
   globalData: {
-    text: '全局变量' },
+    dataPNG: [],
+    dataMP3: [] },
 
-  onLaunch: function onLaunch() {
-    console.log('App Launch');
+  onLaunch: function onLaunch() {var _this = this;
+    var dateNow = +new Date();
+    var dateArr = [
+    new Date(dateNow),
+    new Date(dateNow - 3600 * 1000 * 24 * 1),
+    new Date(dateNow - 3600 * 1000 * 24 * 2),
+    new Date(dateNow - 3600 * 1000 * 24 * 3),
+    new Date(dateNow - 3600 * 1000 * 24 * 4),
+    new Date(dateNow - 3600 * 1000 * 24 * 5),
+    new Date(dateNow - 3600 * 1000 * 24 * 6)];
+
+    for (var i = 0; i < dateArr.length; i++) {
+      var time = dateArr[i];
+      var YY = time.getFullYear();
+      var MM = time.getMonth() + 1 < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1;
+      var DD = time.getDate() < 10 ? '0' + time.getDate() : time.getDate();
+      dateArr[i] = YY + '-' + MM + '-' + DD;
+    }
+    for (var _i = 0; _i < dateArr.length; _i++) {
+      uni.request({
+        url: "http://open.iciba.com/dsapi/?date=".concat(dateArr[_i]),
+        success: function success(res) {
+          _this.$scope.globalData.dataPNG.push(res.data.fenxiang_img);
+          _this.$scope.globalData.dataMP3.push(res.data.tts);
+        } });
+
+    }
   },
   onShow: function onShow() {
-    console.log('App Show');
+    // console.log('App Show')
   },
   onHide: function onHide() {
-    console.log('App Hide');
+    // console.log('App Hide')
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 12 */

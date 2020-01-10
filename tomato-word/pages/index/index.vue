@@ -6,29 +6,14 @@
 			<input class="input" type="text" v-model:value="value" placeholder="请输入需要翻译的单词" maxlength="-1" confirm-type="search" @input="input" @confirm="search" />
 			<icon class="icon" type="clear" size="20" v-show="showFlag" @click="clear" />
 		</view>
-		<swiper :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000" indicator-color="rgba(255, 255, 255, 0.3)" indicator-active-color="#FFFFFF">
-			<swiper-item>
-				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
-			</swiper-item>
-		</swiper>
+		<view class="bottom">
+			<image class="mp3" @click="changeMP3PNG" :src="MP3PNG"></image>
+			<swiper :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000" indicator-color="rgba(255, 255, 255, 0.3)" indicator-active-color="#FFFFFF">
+				<swiper-item v-for="(item,index) in dataPNG" :key="index">
+					<image class="png" :src="item"></image>
+				</swiper-item>
+			</swiper>
+		</view>
 	</view>
 </template>
 
@@ -37,11 +22,35 @@
 		data() {
 			return {
 				value: '',
-				showFlag: false
+				showFlag: false,
+				dataPNG: [
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+				],
+				dataMP3: [
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+					'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+				],
+				MP3PNG: '../../static/mp3.png',
+				innerAudioContext: null
 			}
 		},
 		onLoad() {
 
+		},
+		onShow() {
+			this.dataPNG = getApp().globalData.dataPNG
+			this.dataMP3 = getApp().globalData.dataMP3
 		},
 		methods: {
 			search(e) {
@@ -58,6 +67,23 @@
 			clear() {
 				this.value = ''
 				this.showFlag = false
+			},
+			changeMP3PNG() {
+				if(this.innerAudioContext === null){
+					this.innerAudioContext = uni.createInnerAudioContext();
+					this.innerAudioContext.src = 'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3';
+					this.innerAudioContext.onPlay(() => {
+						this.MP3PNG = '../../static/mp3HL.png'
+					});
+					this.innerAudioContext.onEnded(()=>{
+						this.MP3PNG = '../../static/mp3.png'
+					})
+					this.innerAudioContext.play();
+				}else{
+					this.innerAudioContext.stop();
+					this.MP3PNG = '../../static/mp3.png';
+					this.innerAudioContext = null;
+				}
 			}
 		}
 	}
@@ -116,15 +142,28 @@
 		top: 55px;
 		right: 10px;
 	}
-
+	
+	.bottom{
+		width: 90vw;
+		height: 75vh;
+		position: relative;
+	}
+	
 	swiper {
 		width: 90vw;
 		height: 75vh;
 	}
-	swiper-item{
-		border-radius: 8px;
+	
+	.mp3{
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 30px;
+		right: 20px;
+		z-index: 1;
 	}
-	image {
+	
+	.png {
 		width: 90vw;
 		height: 75vh;
 		border-radius: 8px;

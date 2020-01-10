@@ -8415,7 +8415,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "番茄单词", "usingComponents": {} }, "pages/study/index": { "navigationBarTitleText": "番茄单词", "usingComponents": {} }, "pages/analyse/index": { "navigationBarTitleText": "番茄单词", "usingComponents": {} }, "pages/me/index": { "navigationBarTitleText": "番茄单词", "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "white", "navigationBarTitleText": "番茄单词", "navigationBarBackgroundColor": "#e16531", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "番茄单词" }, "pages/study/index": { "navigationBarTitleText": "番茄单词" }, "pages/analyse/index": { "navigationBarTitleText": "番茄单词" }, "pages/me/index": { "navigationBarTitleText": "番茄单词" } }, "globalStyle": { "navigationBarTextStyle": "white", "navigationBarTitleText": "番茄单词", "navigationBarBackgroundColor": "#e16531", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */

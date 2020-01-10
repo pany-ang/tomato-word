@@ -131,22 +131,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -170,11 +155,35 @@ var _default =
   data: function data() {
     return {
       value: '',
-      showFlag: false };
+      showFlag: false,
+      dataPNG: [
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png'],
+
+      dataMP3: [
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
+      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3'],
+
+      MP3PNG: '../../static/mp3.png',
+      innerAudioContext: null };
 
   },
   onLoad: function onLoad() {
 
+  },
+  onShow: function onShow() {
+    this.dataPNG = getApp().globalData.dataPNG;
+    this.dataMP3 = getApp().globalData.dataMP3;
   },
   methods: {
     search: function search(e) {
@@ -191,7 +200,25 @@ var _default =
     clear: function clear() {
       this.value = '';
       this.showFlag = false;
+    },
+    changeMP3PNG: function changeMP3PNG() {var _this = this;
+      if (this.innerAudioContext === null) {
+        this.innerAudioContext = uni.createInnerAudioContext();
+        this.innerAudioContext.src = 'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3';
+        this.innerAudioContext.onPlay(function () {
+          _this.MP3PNG = '../../static/mp3HL.png';
+        });
+        this.innerAudioContext.onEnded(function () {
+          _this.MP3PNG = '../../static/mp3.png';
+        });
+        this.innerAudioContext.play();
+      } else {
+        this.innerAudioContext.stop();
+        this.MP3PNG = '../../static/mp3.png';
+        this.innerAudioContext = null;
+      }
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 21 */
