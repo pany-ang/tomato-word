@@ -1,9 +1,34 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
+		<view class="background-red"></view>
+		<view class="background-gray"></view>
+		<view class="top">
+			<input class="input" type="text" v-model:value="value" placeholder="请输入需要翻译的单词" maxlength="-1" confirm-type="search" @input="input" @confirm="search" />
+			<icon class="icon" type="clear" size="20" v-show="showFlag" @click="clear" />
 		</view>
+		<swiper :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000" indicator-color="rgba(255, 255, 255, 0.3)" indicator-active-color="#FFFFFF">
+			<swiper-item>
+				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
+			</swiper-item>
+			<swiper-item>
+				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
+			</swiper-item>
+			<swiper-item>
+				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
+			</swiper-item>
+			<swiper-item>
+				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
+			</swiper-item>
+			<swiper-item>
+				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
+			</swiper-item>
+			<swiper-item>
+				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
+			</swiper-item>
+			<swiper-item>
+				<image src="https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png"></image>
+			</swiper-item>
+		</swiper>
 	</view>
 </template>
 
@@ -11,42 +36,97 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				value: '',
+				showFlag: false
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-
+			search(e) {
+				console.log(e.detail.value)
+			},
+			input(e) {
+				console.log(e.detail.value)
+				if (e.detail.value.length > 0) {
+					this.showFlag = true
+				} else {
+					this.showFlag = false
+				}
+			},
+			clear() {
+				this.value = ''
+				this.showFlag = false
+			}
 		}
 	}
 </script>
 
 <style>
 	.content {
+		width: 100vw;
+		min-height: 100vh;
 		display: flex;
-		flex-direction: column;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: center;
+		flex-wrap: wrap;
 	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
+	.background-red {
+		z-index: -1;
+		width: 100vw;
+		height: 40vh;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		background-image: linear-gradient(#e16531, #F5F5F5);
 	}
 
-	.text-area {
-		display: flex;
-		justify-content: center;
+	.background-gray {
+		z-index: -1;
+		width: 100vw;
+		height: 60vh;
+		position: fixed;
+		top: 40vh;
+		left: 0px;
+		background-color: #F5F5F5;
 	}
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+	.top {
+		width: 90vw;
+		position: relative;
+	}
+
+	.input {
+		height: 50px;
+		font-size: 16px;
+		margin-top: 40px;
+		background-color: #FFFFFF;
+		border-radius: 8px;
+		background-image: url(../../static/indexHL.png);
+		background-size: 20px 20px;
+		background-position: 10px 15px;
+		background-repeat: no-repeat;
+		padding: 0px 35px 0px 35px;
+	}
+
+	.icon {
+		position: absolute;
+		top: 55px;
+		right: 10px;
+	}
+
+	swiper {
+		width: 90vw;
+		height: 75vh;
+	}
+	swiper-item{
+		border-radius: 8px;
+	}
+	image {
+		width: 90vw;
+		height: 75vh;
+		border-radius: 8px;
 	}
 </style>

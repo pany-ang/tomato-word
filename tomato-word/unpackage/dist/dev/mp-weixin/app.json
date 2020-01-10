@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/study/index",
+    "pages/analyse/index",
+    "pages/me/index"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "番茄单词",
+    "navigationBarBackgroundColor": "#e16531",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#e16531",
+    "borderStyle": "black",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/index.png",
+        "selectedIconPath": "static/indexHL.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/study/index",
+        "iconPath": "static/study.png",
+        "selectedIconPath": "static/studyHL.png",
+        "text": "学习"
+      },
+      {
+        "pagePath": "pages/analyse/index",
+        "iconPath": "static/analyse.png",
+        "selectedIconPath": "static/analyseHL.png",
+        "text": "分析"
+      },
+      {
+        "pagePath": "pages/me/index",
+        "iconPath": "static/me.png",
+        "selectedIconPath": "static/meHL.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
