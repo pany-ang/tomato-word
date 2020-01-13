@@ -131,64 +131,167 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 47));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
+  components: { uniPopup: uniPopup },
   data: function data() {
     return {
       value: '',
       showFlag: false,
-      dataPNG: [
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/image/8b62e725f61ee233edaeda57c0a61c61.png'],
+      dataPNG: [],
 
-      dataMP3: [
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3',
-      'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3'],
+
+      dataMP3: [],
+
 
       MP3PNG: '../../static/mp3.png',
-      innerAudioContext: null };
+      innerAudioContext: null,
+      current: 0,
+      dataWord: {
+        word_name: '',
+        ph_en: '',
+        ph_am: '',
+        ph_en_mp3: '',
+        ph_am_mp3: '',
+        parts: [
+        {
+          part: "vi.",
+          means: "走;离开;去做;进行" }],
+
+
+        word_pl: '', //复数
+        word_past: '', //过去式
+        word_done: '', //过去分词
+        word_ing: '', //现在分词
+        word_third: '' //第三人称单数
+      } };
 
   },
   onLoad: function onLoad() {
 
   },
   onShow: function onShow() {
+    // 排序
+    for (var i = 0; i < getApp().globalData.dataTime.length - 1; i++) {
+      for (var j = i + 1; j < getApp().globalData.dataTime.length; j++) {
+        if (getApp().globalData.dataTime[i] < getApp().globalData.dataTime[j]) {
+          var t1 = getApp().globalData.dataTime[i];
+          getApp().globalData.dataTime[i] = getApp().globalData.dataTime[j];
+          getApp().globalData.dataTime[j] = t1;
+          var t2 = getApp().globalData.dataMP3[i];
+          getApp().globalData.dataMP3[i] = getApp().globalData.dataMP3[j];
+          getApp().globalData.dataMP3[j] = t2;
+          var t3 = getApp().globalData.dataPNG[i];
+          getApp().globalData.dataPNG[i] = getApp().globalData.dataPNG[j];
+          getApp().globalData.dataPNG[j] = t3;
+        }
+      }
+    }
+    // 渲染
     this.dataPNG = getApp().globalData.dataPNG;
     this.dataMP3 = getApp().globalData.dataMP3;
   },
   methods: {
-    search: function search(e) {
-      console.log(e.detail.value);
+    // 点击搜索按钮
+    search: function search(e) {var _this = this;
+      e.detail.value = e.detail.value.toLowerCase(); // 搜索前先转化为小写
+      uni.request({
+        url: "https://dict-co.iciba.com/api/dictionary.php?w=".concat(e.detail.value, "&key=54A9DE969E911BC5294B70DA8ED5C9C4&type=json"),
+        success: function success(res) {
+          console.log(res.data);
+          if (res.data.is_CRI == 1) {
+            _this.dataWord = res.data;
+            _this.$refs.popup.open();
+          } else {
+            uni.showModal({
+              content: '请输入正确的单词！',
+              showCancel: false });
+
+          }
+        } });
+
     },
+    // 输入
     input: function input(e) {
       console.log(e.detail.value);
       if (e.detail.value.length > 0) {
@@ -197,19 +300,21 @@ var _default =
         this.showFlag = false;
       }
     },
+    // 清空输入框
     clear: function clear() {
       this.value = '';
       this.showFlag = false;
     },
-    changeMP3PNG: function changeMP3PNG() {var _this = this;
+    // 点击播放按钮
+    changeMP3PNG: function changeMP3PNG() {var _this2 = this;
       if (this.innerAudioContext === null) {
         this.innerAudioContext = uni.createInnerAudioContext();
-        this.innerAudioContext.src = 'https://edu-wps.ks3-cn-beijing.ksyun.com/audio/c8bc80da3610e09dfe40691968e70219.mp3';
+        this.innerAudioContext.src = this.dataMP3[this.current];
         this.innerAudioContext.onPlay(function () {
-          _this.MP3PNG = '../../static/mp3HL.png';
+          _this2.MP3PNG = '../../static/mp3HL.png';
         });
         this.innerAudioContext.onEnded(function () {
-          _this.MP3PNG = '../../static/mp3.png';
+          _this2.MP3PNG = '../../static/mp3.png';
         });
         this.innerAudioContext.play();
       } else {
@@ -217,6 +322,10 @@ var _default =
         this.MP3PNG = '../../static/mp3.png';
         this.innerAudioContext = null;
       }
+    },
+    // 改变轮播图current
+    changeCurrent: function changeCurrent(e) {
+      this.current = e.detail.current;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

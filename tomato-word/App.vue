@@ -2,7 +2,8 @@
 	export default {
 		globalData: {
 			dataPNG: [],
-			dataMP3: []
+			dataMP3: [],
+			dataTime: []
 		},
 		onLaunch: function() {
 			const dateNow = +new Date()
@@ -15,28 +16,29 @@
 				(new Date(dateNow - 3600 * 1000 * 24 * 5)),
 				(new Date(dateNow - 3600 * 1000 * 24 * 6))
 			];
-			for(let i=0; i<dateArr.length; i++){
+			for (let i = 0; i < dateArr.length; i++) {
 				let time = dateArr[i];
 				let YY = time.getFullYear()
 				let MM = (time.getMonth() + 1) < 10 ? ('0' + (time.getMonth() + 1)) : (time.getMonth() + 1)
 				let DD = time.getDate() < 10 ? ('0' + time.getDate()) : time.getDate()
 				dateArr[i] = YY + '-' + MM + '-' + DD
 			}
-			for(let i=0; i<dateArr.length; i++){
+			for (let i = 0; i < dateArr.length; i++) {
 				uni.request({
-				    url: `http://open.iciba.com/dsapi/?date=${dateArr[i]}`,
-				    success: (res) => {
+					url: `https://open.iciba.com/dsapi/?date=${dateArr[i]}`,
+					success: (res) => {
 						this.$scope.globalData.dataPNG.push(res.data.fenxiang_img)
 						this.$scope.globalData.dataMP3.push(res.data.tts)
-				    }
+						this.$scope.globalData.dataTime.push(res.data.dateline)
+					}
 				});
 			}
 		},
 		onShow: function() {
-			// console.log('App Show')
+			
 		},
 		onHide: function() {
-			// console.log('App Hide')
+			
 		}
 	}
 </script>

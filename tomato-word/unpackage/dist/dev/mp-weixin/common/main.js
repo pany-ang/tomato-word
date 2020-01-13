@@ -95,7 +95,8 @@ __webpack_require__.r(__webpack_exports__);
 {
   globalData: {
     dataPNG: [],
-    dataMP3: [] },
+    dataMP3: [],
+    dataTime: [] },
 
   onLaunch: function onLaunch() {var _this = this;
     var dateNow = +new Date();
@@ -117,19 +118,20 @@ __webpack_require__.r(__webpack_exports__);
     }
     for (var _i = 0; _i < dateArr.length; _i++) {
       uni.request({
-        url: "http://open.iciba.com/dsapi/?date=".concat(dateArr[_i]),
+        url: "https://open.iciba.com/dsapi/?date=".concat(dateArr[_i]),
         success: function success(res) {
           _this.$scope.globalData.dataPNG.push(res.data.fenxiang_img);
           _this.$scope.globalData.dataMP3.push(res.data.tts);
+          _this.$scope.globalData.dataTime.push(res.data.dateline);
         } });
 
     }
   },
   onShow: function onShow() {
-    // console.log('App Show')
+
   },
   onHide: function onHide() {
-    // console.log('App Hide')
+
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

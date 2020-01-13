@@ -25,18 +25,6 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/study/index",
-        "iconPath": "static/study.png",
-        "selectedIconPath": "static/studyHL.png",
-        "text": "学习"
-      },
-      {
-        "pagePath": "pages/analyse/index",
-        "iconPath": "static/analyse.png",
-        "selectedIconPath": "static/analyseHL.png",
-        "text": "分析"
-      },
-      {
         "pagePath": "pages/me/index",
         "iconPath": "static/me.png",
         "selectedIconPath": "static/meHL.png",
@@ -44,6 +32,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap65.json"
+  "usingComponents": {}
 }
