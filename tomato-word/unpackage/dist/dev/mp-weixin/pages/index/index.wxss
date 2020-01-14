@@ -184,7 +184,7 @@ swiper {
 	    -ms-flex-align: center;
 	        align-items: center;
 }
-.wordMP3_USA {
+.wordMP3_AM {
 	margin-left: 10px;
 	display: -webkit-box;
 	display: -webkit-flex;

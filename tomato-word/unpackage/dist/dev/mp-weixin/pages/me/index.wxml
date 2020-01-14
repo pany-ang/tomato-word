@@ -1,1 +1,1 @@
-<view class="content"></view>
+<view class="content"><view class="background-red"></view><view class="background-gray"></view><view class="logo"><image class="logoImg" src="../../static/tomato2.png"></image></view></view>

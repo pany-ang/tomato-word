@@ -40,11 +40,11 @@
 					<view class="wordMP3_right">
 						<view class="wordMP3_EN">
 							<text>英 [{{dataWord.symbols[0].ph_en}}]</text>
-							<image class="wordMP3_IMG" src="../../static/mp3HL.png"></image>
+							<image id="en" class="wordMP3_IMG" :src="wordMP3PNG_EN" @click="changeWordMP3PNG"></image>
 						</view>
-						<view class="wordMP3_USA">
+						<view class="wordMP3_AM">
 							<text>美 [{{dataWord.symbols[0].ph_am}}]</text>
-							<image class="wordMP3_IMG" src="../../static/mp3HLHL.png"></image>
+							<image id="am" class="wordMP3_IMG" :src="wordMP3PNG_AM" @click="changeWordMP3PNG"></image>
 						</view>
 					</view>
 				</view>
@@ -92,25 +92,12 @@
 					
 				],
 				MP3PNG: '../../static/mp3.png',
+				wordMP3PNG_EN: '../../static/mp3HL.png',
+				wordMP3PNG_AM: '../../static/mp3HL.png',
 				innerAudioContext: null,
 				current: 0,
 				dataWord: {
-					word_name: '',
-					ph_en: '',
-					ph_am: '',
-					ph_en_mp3: '',
-					ph_am_mp3: '',
-					parts: [
-						{
-							part: "vi.",
-							means: "走;离开;去做;进行"
-						},
-					],
-					word_pl: '', //复数
-					word_past: '', //过去式
-					word_done: '', //过去分词
-					word_ing: '', //现在分词
-					word_third: '', //第三人称单数
+					
 				}
 			}
 		},
@@ -172,7 +159,7 @@
 				this.value = ''
 				this.showFlag = false
 			},
-			// 点击播放按钮
+			// 点击播放按钮（每日一句）
 			changeMP3PNG() {
 				if(this.innerAudioContext === null){
 					this.innerAudioContext = uni.createInnerAudioContext();
@@ -182,12 +169,41 @@
 					});
 					this.innerAudioContext.onEnded(()=>{
 						this.MP3PNG = '../../static/mp3.png'
+						this.innerAudioContext = null;
 					})
 					this.innerAudioContext.play();
 				}else{
 					this.innerAudioContext.stop();
 					this.MP3PNG = '../../static/mp3.png';
 					this.innerAudioContext = null;
+				}
+			},
+			// 点击播放按钮（单词发音）
+			changeWordMP3PNG(e) {
+				if(this.innerAudioContext === null){
+					this.innerAudioContext = uni.createInnerAudioContext();
+					if(e.target.id==='en'){
+						this.innerAudioContext.src = this.dataWord.symbols[0].ph_en_mp3;
+						this.innerAudioContext.onPlay(() => {
+							this.wordMP3PNG_EN = '../../static/mp3HLHL.png'
+						});
+						this.innerAudioContext.onEnded(()=>{
+							this.wordMP3PNG_EN = '../../static/mp3HL.png'
+							this.innerAudioContext = null;
+						})
+						this.innerAudioContext.play();
+					}
+					else if(e.target.id==='am'){
+						this.innerAudioContext.src = this.dataWord.symbols[0].ph_am_mp3;
+						this.innerAudioContext.onPlay(() => {
+							this.wordMP3PNG_AM = '../../static/mp3HLHL.png'
+						});
+						this.innerAudioContext.onEnded(()=>{
+							this.wordMP3PNG_AM = '../../static/mp3HL.png'
+							this.innerAudioContext = null;
+						})
+						this.innerAudioContext.play();
+					}
 				}
 			},
 			// 改变轮播图current
@@ -348,7 +364,7 @@
 		align-items: center;
 	}
 	
-	.wordMP3_USA {
+	.wordMP3_AM {
 		margin-left: 10px;
 		display: flex;
 		align-items: center;
