@@ -503,7 +503,7 @@ radio-group label, checkbox-group label{
 	padding-left: 20upx;
 }
 .uni-collapse .uni-list-cell::after {
-	left: 52upx;
+	left: 0upx;
 }
 .uni-list.uni-active {
 	height: auto;

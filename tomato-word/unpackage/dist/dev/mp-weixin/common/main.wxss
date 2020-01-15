@@ -665,7 +665,7 @@ radio-group label, checkbox-group label{
 	padding-left: 20rpx;
 }
 .uni-collapse .uni-list-cell::after {
-	left: 52rpx;
+	left: 0rpx;
 }
 .uni-list.uni-active {
 	height: auto;

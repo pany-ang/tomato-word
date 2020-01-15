@@ -122,27 +122,85 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniCollapse = function uniCollapse() {return __webpack_require__.e(/*! import() | components/uni-collapse/uni-collapse */ "components/uni-collapse/uni-collapse").then(__webpack_require__.bind(null, /*! @/components/uni-collapse/uni-collapse.vue */ 68));};var uniCollapseItem = function uniCollapseItem() {return __webpack_require__.e(/*! import() | components/uni-collapse-item/uni-collapse-item */ "components/uni-collapse-item/uni-collapse-item").then(__webpack_require__.bind(null, /*! @/components/uni-collapse-item/uni-collapse-item.vue */ 75));};var _default =
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+  components: {
+    uniCollapse: uniCollapse,
+    uniCollapseItem: uniCollapseItem },
+
+  data: function data() {
+    return {
+      items: [{
+        value: '四级',
+        name: '四级' },
+
+      {
+        value: '六级',
+        name: '六级' }],
+
+
+      current: '0' };
 
   },
   onLoad: function onLoad() {
-
+    if (uni.getStorageSync('wordType')) {
+      this.current = uni.getStorageSync('wordType');
+    }
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    radioChange: function radioChange(e) {
+      switch (e.detail.value) {
+        case '四级':
+          uni.setStorageSync('wordType', '0');
+          break;
+        case '六级':
+          uni.setStorageSync('wordType', '1');
+          break;
+        default:
+          break;}
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
