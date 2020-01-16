@@ -9,7 +9,7 @@
 		{
 			"path": "pages/study/index",
 			"style": {
-				"navigationBarTitleText": "番茄单词"
+				"navigationBarTitleText": "背单词"
 			}
 		},{
 			"path": "pages/analyse/index",
@@ -24,7 +24,7 @@
 		},{
             "path" : "pages/review/index",
             "style" : {
-				"navigationBarTitleText": "番茄单词"
+				"navigationBarTitleText": "复习"
 			}
         }
     ],

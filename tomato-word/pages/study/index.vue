@@ -40,17 +40,18 @@
 		</view>
 		<view class="remark">注：SM-2算法 0分-完全没见过 3分-模糊 5分-记忆深刻</view>
 		<view class="background-bottom">
-			<button type="primary" :plain="true" class="bottom" style="border-color: #FF0000;color: #FF0000;" @click="nextWord">0</button>
-			<button type="primary" :plain="true" class="bottom" style="border-color: #FF7F50;color: #FF7F50;" @click="nextWord">1</button>
-			<button type="primary" :plain="true" class="bottom" style="border-color: #FFA500;color: #FFA500;" @click="nextWord">2</button>
-			<button type="primary" :plain="true" class="bottom" style="border-color: #9ACD32;color: #9ACD32;" @click="nextWord">3</button>
-			<button type="primary" :plain="true" class="bottom" style="border-color: #3CB371;color: #3CB371;" @click="nextWord">4</button>
-			<button type="primary" :plain="true" class="bottom" style="border-color: #1E90FF;color: #1E90FF;" @click="nextWord">5</button>
+			<button type="primary" :plain="true" id="0" class="bottom" style="border-color: #FF0000;color: #FF0000;" @click="WordRating">0</button>
+			<button type="primary" :plain="true" id="1" class="bottom" style="border-color: #FF7F50;color: #FF7F50;" @click="WordRating">1</button>
+			<button type="primary" :plain="true" id="2" class="bottom" style="border-color: #FFA500;color: #FFA500;" @click="WordRating">2</button>
+			<button type="primary" :plain="true" id="3" class="bottom" style="border-color: #9ACD32;color: #9ACD32;" @click="WordRating">3</button>
+			<button type="primary" :plain="true" id="4" class="bottom" style="border-color: #3CB371;color: #3CB371;" @click="WordRating">4</button>
+			<button type="primary" :plain="true" id="5" class="bottom" style="border-color: #1E90FF;color: #1E90FF;" @click="WordRating">5</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import sm2 from "@/common/sm2.js"
 	export default {
 		data() {
 			return {
@@ -66,12 +67,13 @@
 			this.nextWord()
 		},
 		methods: {
+			// 下一个单词
 			nextWord(){
 				let r = Math.floor(Math.random() * this.wordList.length)
 				uni.request({
 					url: `https://dict-co.iciba.com/api/dictionary.php?w=${this.wordList[r]}&key=54A9DE969E911BC5294B70DA8ED5C9C4&type=json`,
 					success: (res) => {
-						console.log(res.data)
+						// console.log(res.data)
 						if (res.data.is_CRI == 1) {
 							this.dataWord = res.data
 						} else {
@@ -80,6 +82,17 @@
 					}
 				});
 			},
+			// 单词评分
+			WordRating(e){
+				let sm2Response = sm2(Number(e.target.id))
+				// console.log(response)
+				let params = {
+					word: this.dataWord.word_name,
+					sm2Response: sm2Response
+				}
+				this.nextWord()
+			},
+			// 点击播放按钮
 			changeWordMP3PNG(e) {
 				if (this.innerAudioContext === null) {
 					this.innerAudioContext = uni.createInnerAudioContext();

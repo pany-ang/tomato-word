@@ -149,7 +149,7 @@
 							this.$refs.popup.open()
 						} else {
 							uni.showModal({
-								content: '请输入正确的单词！',
+								content: '非常抱歉，触及到我的翻译盲区啦~',
 								showCancel: false
 							});
 						}
