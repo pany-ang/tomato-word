@@ -7,7 +7,7 @@
 		</view>
 		<uni-collapse class="collapse">
 			<uni-collapse-item title="选择词典">
-				<radio-group  @change="radioChange">
+				<radio-group @change="radioChange">
 					<label class="uni-list-cell uni-list-cell-pd" v-for="(item,index) in items" :key="item.value">
 						<view>
 							<radio :value="item.value" :checked="index == current" />
@@ -37,6 +37,11 @@
 </template>
 
 <script>
+	import { wordListCet4 } from '@/common/cet4.js'
+	import { wordListCet6 } from '@/common/cet6.js'
+	import { wordListKaoyan } from '@/common/kaoyan.js'
+	import { wordListZy8 } from '@/common/zy8.js'
+	import { wordList500 } from '@/common/500.js'
 	import uniCollapse from '@/components/uni-collapse/uni-collapse.vue'
 	import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
 	export default {
@@ -53,24 +58,50 @@
 					{
 						value: '六级',
 						name: '六级'
-					}
+					},
+					{
+						value: '考研',
+						name: '考研'
+					},
+					{
+						value: '专八',
+						name: '专八'
+					},
+					{
+						value: '软件',
+						name: '软件'
+					},
 				],
 				current: '0'
 			}
 		},
 		onLoad() {
-			if(uni.getStorageSync('wordType')){
+			if (uni.getStorageSync('wordType')) {
 				this.current = uni.getStorageSync('wordType');
 			}
 		},
 		methods: {
 			radioChange(e) {
-				switch (e.detail.value){
+				switch (e.detail.value) {
 					case '四级':
-					uni.setStorageSync('wordType', '0');
+						uni.setStorageSync('wordType', '0');
+						uni.setStorageSync('wordList', JSON.stringify(wordListCet4));
 						break;
 					case '六级':
-					uni.setStorageSync('wordType', '1');
+						uni.setStorageSync('wordType', '1');
+						uni.setStorageSync('wordList', JSON.stringify(wordListCet6));
+						break;
+					case '考研':
+						uni.setStorageSync('wordType', '2');
+						uni.setStorageSync('wordList', JSON.stringify(wordListKaoyan));
+						break;
+					case '专八':
+						uni.setStorageSync('wordType', '3');
+						uni.setStorageSync('wordList', JSON.stringify(wordListZy8));
+						break;
+					case '软件':
+						uni.setStorageSync('wordType', '4');
+						uni.setStorageSync('wordList', JSON.stringify(wordList500));
 						break;
 					default:
 						break;
@@ -89,10 +120,6 @@
 
 		width: 100vw;
 		min-height: 100vh;
-		/* display: flex;
-		align-items: flex-start;
-		justify-content: center;
-		flex-wrap: wrap; */
 	}
 
 	.background-red {
@@ -130,18 +157,18 @@
 		width: 100vw;
 		margin-top: 10vh;
 	}
-	
+
 	.appExplain {
 		padding-left: 12px;
 	}
-	
+
 	.input_issue {
 		width: 96%;
 		height: 100rpx;
 		padding: 18rpx 2%;
 		background-color: white;
 	}
-	
+
 	.input_QQ {
 		width: 96%;
 		height: 50rpx;
@@ -149,7 +176,7 @@
 		padding: 18rpx 2%;
 		background-color: white;
 	}
-	
+
 	.button {
 		width: 100%;
 		border-radius: 0;

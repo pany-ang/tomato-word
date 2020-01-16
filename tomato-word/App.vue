@@ -1,4 +1,5 @@
 <script>
+	import { wordListCet4 } from '@/common/cet4.js'
 	export default {
 		globalData: {
 			dataPNG: [],
@@ -35,7 +36,8 @@
 			}
 		},
 		onShow: function() {
-			
+			// 默认本地词库为Cet4
+			uni.setStorageSync('wordList', JSON.stringify(wordListCet4));
 		},
 		onHide: function() {
 			

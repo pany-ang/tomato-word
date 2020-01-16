@@ -6,26 +6,34 @@
 			<image class="logoImg" src="../../static/tomato2.png"></image>
 		</view>
 		<view class="top">
-			<input class="input" type="text" v-model="value" placeholder="请输入需要翻译的单词" maxlength="-1" confirm-type="search" @input="input" @confirm="search" />
+			<input class="input" type="text" v-model="value" placeholder="请输入需要翻译的单词" maxlength="-1" confirm-type="search"
+			 @input="input" @confirm="search" />
 			<icon class="icon" type="clear" size="20" v-show="showFlag" @click="clear" />
 		</view>
 		<view class="center">
-			<view class="recite">
-				<image class="reciteImg" src="../../static/recite.png" ></image>
-				<text>背单词</text>
-			</view>
-			<view class="review">
-				<image class="reviewImg" src="../../static/review.png"></image>
-				<text>复习</text>
-			</view>
-			<view class="analyse">
-				<image class="reviewImg" src="../../static/analyseIndex.png"></image>
-				<text>分析</text>
-			</view>
+			<navigator url="/pages/study/index" hover-class="none">
+				<view class="recite">
+					<image class="reciteImg" src="../../static/recite.png"></image>
+					<text>背单词</text>
+				</view>
+			</navigator>
+			<navigator url="/pages/review/index" hover-class="none">
+				<view class="review">
+					<image class="reviewImg" src="../../static/review.png"></image>
+					<text>复习</text>
+				</view>
+			</navigator>
+			<navigator url="/pages/analyse/index" hover-class="none">
+				<view class="analyse">
+					<image class="reviewImg" src="../../static/analyseIndex.png"></image>
+					<text>分析</text>
+				</view>
+			</navigator>
 		</view>
 		<view class="bottom">
 			<image class="mp3" @click="changeMP3PNG" :src="MP3PNG"></image>
-			<swiper :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000" indicator-color="rgba(255, 255, 255, 0.3)" indicator-active-color="#FFFFFF" @change="changeCurrent">
+			<swiper :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000" indicator-color="rgba(255, 255, 255, 0.3)"
+			 indicator-active-color="#FFFFFF" @change="changeCurrent">
 				<swiper-item v-for="(item,index) in dataPNG" :key="index">
 					<image class="png" :src="item"></image>
 				</swiper-item>
@@ -51,7 +59,8 @@
 				<view class="wordTranslation">
 					<view style="font-weight: bold;">常用释义</view>
 					<view v-for="(item,index) in dataWord.symbols[0].parts" :key="index">
-						<text style="color: gray;">{{item.part}}</text> <text style="margin-left: 10px;"><text v-for="(item,index) in item.means" :key="index">{{item}}；</text></text>
+						<text style="color: gray;">{{item.part}}</text> <text style="margin-left: 10px;"><text v-for="(item,index) in item.means"
+							 :key="index">{{item}}；</text></text>
 					</view>
 				</view>
 				<view class="wordSupplement">
@@ -80,16 +89,18 @@
 <script>
 	import uniPopup from "@/components/uni-popup/uni-popup.vue"
 	export default {
-		components: { uniPopup },
+		components: {
+			uniPopup
+		},
 		data() {
 			return {
 				value: '',
 				showFlag: false,
 				dataPNG: [
-					
+
 				],
 				dataMP3: [
-					
+
 				],
 				MP3PNG: '../../static/mp3.png',
 				wordMP3PNG_EN: '../../static/mp3HL.png',
@@ -97,7 +108,7 @@
 				innerAudioContext: null,
 				current: 0,
 				dataWord: {
-					
+
 				}
 			}
 		},
@@ -133,10 +144,10 @@
 					url: `https://dict-co.iciba.com/api/dictionary.php?w=${e.detail.value}&key=54A9DE969E911BC5294B70DA8ED5C9C4&type=json`,
 					success: (res) => {
 						console.log(res.data)
-						if(res.data.is_CRI == 1){
+						if (res.data.is_CRI == 1) {
 							this.dataWord = res.data
 							this.$refs.popup.open()
-						}else{
+						} else {
 							uni.showModal({
 								content: '请输入正确的单词！',
 								showCancel: false
@@ -161,18 +172,18 @@
 			},
 			// 点击播放按钮（每日一句）
 			changeMP3PNG() {
-				if(this.innerAudioContext === null){
+				if (this.innerAudioContext === null) {
 					this.innerAudioContext = uni.createInnerAudioContext();
 					this.innerAudioContext.src = this.dataMP3[this.current];
 					this.innerAudioContext.onPlay(() => {
 						this.MP3PNG = '../../static/mp3HL.png'
 					});
-					this.innerAudioContext.onEnded(()=>{
+					this.innerAudioContext.onEnded(() => {
 						this.MP3PNG = '../../static/mp3.png'
 						this.innerAudioContext = null;
 					})
 					this.innerAudioContext.play();
-				}else{
+				} else {
 					this.innerAudioContext.stop();
 					this.MP3PNG = '../../static/mp3.png';
 					this.innerAudioContext = null;
@@ -180,25 +191,24 @@
 			},
 			// 点击播放按钮（单词发音）
 			changeWordMP3PNG(e) {
-				if(this.innerAudioContext === null){
+				if (this.innerAudioContext === null) {
 					this.innerAudioContext = uni.createInnerAudioContext();
-					if(e.target.id==='en'){
+					if (e.target.id === 'en') {
 						this.innerAudioContext.src = this.dataWord.symbols[0].ph_en_mp3;
 						this.innerAudioContext.onPlay(() => {
 							this.wordMP3PNG_EN = '../../static/mp3HLHL.png'
 						});
-						this.innerAudioContext.onEnded(()=>{
+						this.innerAudioContext.onEnded(() => {
 							this.wordMP3PNG_EN = '../../static/mp3HL.png'
 							this.innerAudioContext = null;
 						})
 						this.innerAudioContext.play();
-					}
-					else if(e.target.id==='am'){
+					} else if (e.target.id === 'am') {
 						this.innerAudioContext.src = this.dataWord.symbols[0].ph_am_mp3;
 						this.innerAudioContext.onPlay(() => {
 							this.wordMP3PNG_AM = '../../static/mp3HLHL.png'
 						});
-						this.innerAudioContext.onEnded(()=>{
+						this.innerAudioContext.onEnded(() => {
 							this.wordMP3PNG_AM = '../../static/mp3HL.png'
 							this.innerAudioContext = null;
 						})
@@ -249,12 +259,12 @@
 		display: flex;
 		justify-content: center;
 	}
-	
+
 	.logoImg {
 		width: 64px;
 		height: 64px;
 	}
-	
+
 	.top {
 		width: 90vw;
 		position: relative;
@@ -278,15 +288,17 @@
 		top: 15px;
 		right: 10px;
 	}
-	
+
 	.center {
 		width: 90vw;
 		height: 7vh;
 		display: flex;
 		justify-content: space-between;
 	}
-	
-	.recite, .review, .analyse {
+
+	.recite,
+	.review,
+	.analyse {
 		width: 28vw;
 		height: 7vh;
 		font-size: 2.5vh;
@@ -297,13 +309,14 @@
 		justify-content: center;
 		align-items: center;
 	}
-	
-	.reciteImg, .reviewImg {
+
+	.reciteImg,
+	.reviewImg {
 		width: 5vh;
 		height: 5vh;
 		margin-right: 1vw;
 	}
-	
+
 	.bottom {
 		width: 90vw;
 		height: 60vh;
@@ -311,13 +324,13 @@
 		overflow: hidden;
 		border-radius: 8px;
 	}
-	
+
 	swiper {
 		width: 90vw;
 		height: 60vh;
 	}
-	
-	.mp3{
+
+	.mp3 {
 		width: 20px;
 		height: 20px;
 		position: absolute;
@@ -325,12 +338,12 @@
 		right: 20px;
 		z-index: 1;
 	}
-	
+
 	.png {
 		width: 90vw;
 		height: 75vh;
 	}
-	
+
 	.popup {
 		width: 90vw;
 		/* height: 50vh; */
@@ -341,46 +354,46 @@
 		/* align-items: center; */
 		border-radius: 8px;
 	}
-	
+
 	.wordMP3 {
 		width: 90vw;
 		background-color: #FFFFFF;
 		border-radius: 8px 8px 0px 0px;
 	}
-	
+
 	.wordMP3_left {
 		margin-left: 3vh;
 		font-size: 4vh;
 	}
-	
+
 	.wordMP3_right {
 		margin-left: 3vh;
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.wordMP3_EN {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.wordMP3_AM {
 		margin-left: 10px;
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.wordMP3_IMG {
 		width: 3vh;
 		height: 3vh;
 		margin-left: 5px;
 	}
-	
+
 	.wordTranslation {
 		margin-top: 5px;
 		margin-left: 3vh;
 	}
-	
+
 	.wordSupplement {
 		margin-top: 5px;
 		margin-left: 3vh;

@@ -21,8 +21,13 @@
 			"style": {
 				"navigationBarTitleText": "番茄单词"
 			}
-		}
-	],
+		},{
+            "path" : "pages/review/index",
+            "style" : {
+				"navigationBarTitleText": "番茄单词"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "番茄单词",
