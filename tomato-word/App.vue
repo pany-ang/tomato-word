@@ -38,6 +38,8 @@
 		onShow: function() {
 			// 默认本地词库为Cet4
 			uni.setStorageSync('wordList', JSON.stringify(wordListCet4));
+			// 初始云开发
+			wx.cloud.init()
 		},
 		onHide: function() {
 			

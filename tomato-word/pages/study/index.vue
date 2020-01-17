@@ -68,13 +68,14 @@
 		},
 		methods: {
 			// 下一个单词
-			nextWord(){
+			nextWord() {
 				let r = Math.floor(Math.random() * this.wordList.length)
 				uni.request({
 					url: `https://dict-co.iciba.com/api/dictionary.php?w=${this.wordList[r]}&key=54A9DE969E911BC5294B70DA8ED5C9C4&type=json`,
 					success: (res) => {
 						// console.log(res.data)
 						if (res.data.is_CRI == 1) {
+							// 如果单词存在
 							this.dataWord = res.data
 						} else {
 							this.nextWord()
@@ -83,13 +84,25 @@
 				});
 			},
 			// 单词评分
-			WordRating(e){
+			WordRating(e) {
 				let sm2Response = sm2(Number(e.target.id))
 				// console.log(response)
 				let params = {
 					word: this.dataWord.word_name,
 					sm2Response: sm2Response
 				}
+				wx.cloud.callFunction({
+						// 云函数名称
+						name: 'setWord',
+						// 传给云函数的参数
+						data: {
+							params : params
+						},
+					})
+					.then(res => {
+						console.log(res.result)
+					})
+					.catch(console.error)
 				this.nextWord()
 			},
 			// 点击播放按钮
@@ -139,31 +152,31 @@
 		/* background-color: #e16531; */
 		background-image: linear-gradient(#e16531, #F5F5F5);
 	}
-	
+
 	.wordMP3_left {
 		height: 12vh;
 		margin-left: 3vh;
 		font-size: 6vh;
 	}
-	
+
 	.wordMP3_right {
 		margin-left: 3vh;
 		display: flex;
 		align-items: center;
 		color: grey;
 	}
-	
+
 	.wordMP3_EN {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.wordMP3_AM {
 		margin-left: 10px;
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.wordMP3_IMG {
 		width: 3vh;
 		height: 3vh;
@@ -186,7 +199,7 @@
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.background-bottom {
 		width: 100vw;
 		height: 8vh;
@@ -194,7 +207,7 @@
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.bottom {
 		width: 15vw;
 	}

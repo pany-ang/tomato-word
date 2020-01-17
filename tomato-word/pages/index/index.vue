@@ -17,12 +17,12 @@
 					<text>背单词</text>
 				</view>
 			</navigator>
-			<navigator url="/pages/review/index" hover-class="none">
-				<view class="review">
-					<image class="reviewImg" src="../../static/review.png"></image>
-					<text>复习</text>
-				</view>
-			</navigator>
+			<!-- <navigator url="/pages/review/index" hover-class="none"> -->
+			<view class="review" @click="review">
+				<image class="reviewImg" src="../../static/review.png"></image>
+				<text>复习</text>
+			</view>
+			<!-- </navigator> -->
 			<navigator url="/pages/analyse/index" hover-class="none">
 				<view class="analyse">
 					<image class="reviewImg" src="../../static/analyseIndex.png"></image>
@@ -143,7 +143,7 @@
 				uni.request({
 					url: `https://dict-co.iciba.com/api/dictionary.php?w=${e.detail.value}&key=54A9DE969E911BC5294B70DA8ED5C9C4&type=json`,
 					success: (res) => {
-						console.log(res.data)
+						// console.log(res.data)
 						if (res.data.is_CRI == 1) {
 							this.dataWord = res.data
 							this.$refs.popup.open()
@@ -219,6 +219,39 @@
 			// 改变轮播图current
 			changeCurrent(e) {
 				this.current = e.detail.current
+			},
+			// 点击了复习按钮
+			review() {
+				wx.cloud.callFunction({
+						// 云函数名称
+						name: 'getWord',
+						// 传给云函数的参数
+						data: {},
+					})
+					.then(res => {
+						console.log(res.result)
+						let total = res.result.total
+						let wordReviewList = res.result.wordReviewList
+						let length = wordReviewList.length
+						uni.showModal({
+							title: `待复习单词总数：${total}`,
+							content: `今日待复习数：${length}`,
+							showCancel: false,
+							success(res) {
+								if (res.confirm) {
+									if(length !== 0){
+										uni.setStorageSync('wordReviewList', JSON.stringify(wordReviewList))
+										uni.navigateTo({
+										    url: '../review/index'
+										});
+									}else{
+										// 什么都不做
+									}
+								}
+							}
+						});
+					})
+					.catch(console.error)
 			}
 		}
 	}
