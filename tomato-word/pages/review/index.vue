@@ -55,6 +55,7 @@
 	export default {
 		data() {
 			return {
+				index: -1,
 				wordList: [],
 				dataWord: {},
 				wordMP3PNG_EN: '../../static/mp3HL.png',
@@ -63,37 +64,46 @@
 			}
 		},
 		onLoad() {
-			this.wordList = JSON.parse(uni.getStorageSync('wordList'))
+			this.wordList = JSON.parse(uni.getStorageSync('wordReviewList'))
 			this.nextWord()
 		},
 		methods: {
 			// 下一个单词
 			nextWord() {
-				let r = Math.floor(Math.random() * this.wordList.length)
-				uni.request({
-					url: `https://dict-co.iciba.com/api/dictionary.php?w=${this.wordList[r]}&key=54A9DE969E911BC5294B70DA8ED5C9C4&type=json`,
-					success: (res) => {
-						// console.log(res.data)
-						if (res.data.is_CRI == 1) {
+				this.index++
+				if (this.index < this.wordList.length) {
+					uni.request({
+						url: `https://dict-co.iciba.com/api/dictionary.php?w=${this.wordList[this.index].word.word}&key=54A9DE969E911BC5294B70DA8ED5C9C4&type=json`,
+						success: (res) => {
+							// console.log(res.data)
 							// 如果单词存在
 							this.dataWord = res.data
-						} else {
-							this.nextWord()
 						}
-					}
-				});
+					});
+				} else {
+					uni.showModal({
+						content: '今日单词已全部复习',
+						showCancel: false,
+						success(res) {
+							uni.navigateBack({
+							    delta: 1 // 返回一个页面
+							});
+						}
+					});
+				}
 			},
 			// 单词评分
 			WordRating(e) {
-				let sm2Response = sm2(Number(e.target.id))
-				// console.log(response)
+				let sm2Response = sm2(Number(e.target.id), this.wordList[this.index].word.sm2Response.schedule, this.wordList[this.index]
+					.word.sm2Response.factor)
+				console.log(sm2Response)
 				let params = {
 					word: this.dataWord.word_name,
 					sm2Response: sm2Response
 				}
 				wx.cloud.callFunction({
 						// 云函数名称
-						name: 'setWord',
+						name: 'updateWord',
 						// 传给云函数的参数
 						data: {
 							params: params
