@@ -30,7 +30,8 @@
 					success: (res) => {
 						this.$scope.globalData.dataPNG.push(res.data.fenxiang_img)
 						this.$scope.globalData.dataMP3.push(res.data.tts)
-						this.$scope.globalData.dataTime.push(res.data.dateline)
+						this.$scope.globalData.dataTime.push(dateArr[i])
+						// console.log(dateArr[i])
 					}
 				});
 			}
