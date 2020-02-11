@@ -20,16 +20,15 @@
 				<view class="appExplain">
 					<view>开发者：pany</view>
 					<view>联系QQ：939630029</view>
-					<view>个人主页：panbook.top</view>
 					<view>知乎主页：zhuanlan.zhihu.com/panyang</view>
 					<view>软件已开源：github.com/pany-ang/tomato-word</view>
 				</view>
 			</uni-collapse-item>
 			<uni-collapse-item title="用户反馈">
 				<view>
-					<input class="input_issue" type="text" placeholder="请详细描述你所遇到的问题" />
-					<input class="input_QQ" type="text" placeholder="请留下你的联系方式,如QQ" />
-					<button class="button" type="primary">提交</button>
+					<input class="input_issue" type="text" v-model="detail" placeholder="请详细描述你所遇到的问题" />
+					<input class="input_QQ" type="text" v-model="contactInfo" placeholder="请留下你的联系方式,如QQ" />
+					<button class="button" type="primary" @click="feedback">提交</button>
 				</view>
 			</uni-collapse-item>
 		</uni-collapse>
@@ -51,6 +50,8 @@
 		},
 		data() {
 			return {
+				detail: '',
+				contactInfo: '',
 				items: [{
 						value: '四级',
 						name: '四级'
@@ -105,6 +106,37 @@
 						break;
 					default:
 						break;
+				}
+			},
+			feedback() {
+				if(this.detail.length!==0 && this.contactInfo.length!==0){
+					wx.cloud.callFunction({
+							// 云函数名称
+							name: 'userFeedback',
+							// 传给云函数的参数
+							data: {
+								detail: this.detail,
+								contactInfo: this.contactInfo,
+								time: new Date().toLocaleString()
+							},
+						}).then(res => {
+							let than = this;
+							uni.showModal({
+								content: '提交成功，我会尽快处理你的反馈~',
+								showCancel: false,
+								success(res) {
+									than.detail = '';
+									than.contactInfo = '';
+								}
+							});
+						}).catch(console.error)
+				}else{
+					uni.showModal({
+						content: '你还没有留下问题或联系方式~',
+						showCancel: false,
+						success(res) {
+						}
+					});
 				}
 			}
 		}
