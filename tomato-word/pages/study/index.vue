@@ -96,7 +96,9 @@
 						name: 'setWord',
 						// 传给云函数的参数
 						data: {
-							params : params
+							params : params,
+							wordType: uni.getStorageSync('wordType'),
+							wordScore: Number(e.target.id)
 						},
 					})
 					.then(res => {

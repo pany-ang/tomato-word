@@ -38,7 +38,10 @@
 		},
 		onShow: function() {
 			// 默认本地词库为Cet4
-			uni.setStorageSync('wordList', JSON.stringify(wordListCet4));
+			if (!uni.getStorageSync('wordType')) {
+				uni.setStorageSync('wordList', JSON.stringify(wordListCet4));
+				uni.setStorageSync('wordType', '0');
+			}
 			// 初始云开发
 			wx.cloud.init()
 		},

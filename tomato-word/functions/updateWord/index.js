@@ -25,6 +25,7 @@ exports.main = async(event, context) => {
       _openid: wxContext.OPENID,
       word: event.params,
       nextTime,
+      wordScore: event.wordScore
     }
   })
 

@@ -106,7 +106,8 @@
 						name: 'updateWord',
 						// 传给云函数的参数
 						data: {
-							params: params
+							params: params,
+							wordScore: Number(e.target.id)
 						},
 					})
 					.then(res => {

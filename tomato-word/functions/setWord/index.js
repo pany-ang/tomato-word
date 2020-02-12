@@ -30,6 +30,8 @@ exports.main = async(event, context) => {
         _openid: wxContext.OPENID,
         word: event.params,
         nextTime,
+        wordType: event.wordType,
+        wordScore: event.wordScore
       }
     })
   } else {
