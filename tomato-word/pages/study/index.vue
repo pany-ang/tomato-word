@@ -102,7 +102,7 @@
 						},
 					})
 					.then(res => {
-						console.log(res.result)
+						// console.log(res.result)
 					})
 					.catch(console.error)
 				this.nextWord()

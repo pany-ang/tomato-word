@@ -96,7 +96,7 @@
 			WordRating(e) {
 				let sm2Response = sm2(Number(e.target.id), this.wordList[this.index].word.sm2Response.schedule, this.wordList[this.index]
 					.word.sm2Response.factor)
-				console.log(sm2Response)
+				// console.log(sm2Response)
 				let params = {
 					word: this.dataWord.word_name,
 					sm2Response: sm2Response
@@ -111,7 +111,7 @@
 						},
 					})
 					.then(res => {
-						console.log(res.result)
+						// console.log(res.result)
 					})
 					.catch(console.error)
 				this.nextWord()

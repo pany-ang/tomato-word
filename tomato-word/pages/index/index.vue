@@ -158,7 +158,7 @@
 			},
 			// 输入
 			input(e) {
-				console.log(e.detail.value)
+				// console.log(e.detail.value)
 				if (e.detail.value.length > 0) {
 					this.showFlag = true
 				} else {
@@ -193,7 +193,8 @@
 			changeWordMP3PNG(e) {
 				if (this.innerAudioContext === null) {
 					this.innerAudioContext = uni.createInnerAudioContext();
-					if (e.target.id === 'en') {
+					if (e.target.id === 'en' && this.dataWord.symbols[0].ph_en_mp3) {
+						// console.log(this.dataWord.symbols[0].ph_en_mp3)
 						this.innerAudioContext.src = this.dataWord.symbols[0].ph_en_mp3;
 						this.innerAudioContext.onPlay(() => {
 							this.wordMP3PNG_EN = '../../static/mp3HLHL.png'
@@ -203,7 +204,8 @@
 							this.innerAudioContext = null;
 						})
 						this.innerAudioContext.play();
-					} else if (e.target.id === 'am') {
+					} else if (e.target.id === 'am' && this.dataWord.symbols[0].ph_am_mp3) {
+						// console.log(this.dataWord.symbols[0].ph_am_mp3)
 						this.innerAudioContext.src = this.dataWord.symbols[0].ph_am_mp3;
 						this.innerAudioContext.onPlay(() => {
 							this.wordMP3PNG_AM = '../../static/mp3HLHL.png'
@@ -213,6 +215,8 @@
 							this.innerAudioContext = null;
 						})
 						this.innerAudioContext.play();
+					} else {
+						this.innerAudioContext = null;
 					}
 				}
 			},
@@ -229,7 +233,7 @@
 						data: {},
 					})
 					.then(res => {
-						console.log(res.result)
+						// console.log(res.result)
 						let total = res.result.total
 						let wordReviewList = res.result.wordReviewList
 						let length = wordReviewList.length

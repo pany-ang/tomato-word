@@ -25,7 +25,7 @@
 						data: {},
 					})
 					.then(res => {
-						console.log(res.result)
+						// console.log(res.result)
 						this.show(res.result.wordType, res.result.wordScore);
 					})
 					.catch(console.error)
@@ -87,13 +87,13 @@
 					title: {
 						name: passRate+'%',
 						color: '#7cb5ec',
-						fontSize: 25,
+						fontSize: 20,
 						offsetY: -0,
 					},
 					subtitle: {
 						name: '及格率',
 						color: '#666666',
-						fontSize: 15,
+						fontSize: 10,
 						offsetY: 0,
 					},
 					extra: {
