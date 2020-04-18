@@ -10,4 +10,4 @@ uni-app/HBuilderX
 导入项目到HBuilderX并选择运行到微信开发者工具，即可解锁查询单词与每日一句功能；再手动导入function目录中的云函数，再再手动创建云数据库集合，即可解锁所有功能~
 ## 体验
 微信搜索小程序：番茄单词
-![](./tomato-word/static/wx.jpg)
+![二维码](https://i.loli.net/2020/04/18/yqdfQjLRl4b35rE.jpg)
